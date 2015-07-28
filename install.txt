@@ -3,18 +3,8 @@
 # You need ROS, a camera to supply a ROS image stream, and Kinefly.  If you want to control voltages, then you'll need the PhidgetsAnalog hardware w/ Phidgets API.  If you want to control LED panels, then you'll need panels, see below.  There might be more stuff, but that's the basic setup.
 
 
-# Install ROS Hydro on Ubuntu.
-# Go to the ros.org website, and follow the installation instructions (hydro works well); OR if you're putting Hydro onto Ubuntu Precise, then copy & paste these commands:
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > /etc/apt/sources.list.d/ros-latest.list'
-wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-sudo apt-get update
-sudo apt-get install -y ros-hydro-desktop-full
-sudo rosdep init
-rosdep update
-echo "source /opt/ros/hydro/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-sudo apt-get install -y python-rosinstall
-sudo apt-get install -y ros-hydro-cmake-modules
+# Install ROS Indigo on Ubuntu.
+# Go to the ros.org website, and follow the installation instructions
 
 
 # Get a few additional pieces.
@@ -24,16 +14,6 @@ sudo apt-get install -y python-scipy
 sudo apt-get install -y libdc1394-22-dev
 sudo apt-get install -y intltool
 sudo apt-get install -y gobject-introspection
-
-
-# Get Aravis camera library.
-# Download the latest release from https://wiki.gnome.org/Aravis, 
-# for example:  http://ftp.acc.umu.se/pub/GNOME/sources/aravis/0.3/aravis-0.3.1.tar.xz 
-tar -xzf aravis-0.3.1.tar.xz   # To extract the files.
-cd aravis-0.3.1
-./configure
-make && sudo make install
-
 
 # Run the following commands (adjust them first if necessary).
 mkdir -p ~/catkin/src
@@ -47,13 +27,18 @@ echo "export ROS_PACKAGE_PATH=~/src.git:~/src.hg:~/catkin:$ROS_PACKAGE_PATH" >> 
 # sudo reboot
 
 
-# Get & make camera_aravis.
-cd ~/catkin/src
-git clone http://github.com/ssafarik/camera_aravis
-cd ~/catkin && catkin_make
+# Get & make camera1394 ROS drivers.
+cd catkin/src/
+git clone https://github.com/ros-drivers/camera1394.git
+cd ~/catkin
+catkin_make
 
 
-# Verify that your camera hardware is configured properly, i.e. ethernet ports & static ip's & dhcp, or firewire stuff.
+# Verify that your camera hardware is configured properly, i.e. download and install coriander to test firewire camera:
+sudo apt-get install coriander
+plug the camera into the computer and run
+coriander
+Under the Services tab, click Display and you should see a live image from the camera.
 
 
 # Get & make both "libphidget" and "PhidgetsPython"
@@ -87,7 +72,7 @@ rosmake Kinefly
 # directories. 
 cd Kinefly/launch
 ls
-cp -R thadsrig yourrigname
+cp -R polarization yourrigname
 echo "export RIG=yourrigname" >> ~/.bashrc
 . ~/.bashrc
 
