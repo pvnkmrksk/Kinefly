@@ -237,7 +237,7 @@ class MainWindow:
         for i in range(20):
             color = cv.Scalar(int(255*np.random.random()), int(255*np.random.random()), int(255*np.random.random()), 0)
             cv2.putText(imgInitial, 'Waiting for Camera...', (int(w*0.8*np.random.random()),int(h*np.random.random())), self.fontface, 2*self.scaleText, color)
-        rosimg = self.cvbridge.cv_to_imgmsg(cv.fromarray(imgInitial), 'passthrough')
+        rosimg = self.cvbridge.cv2_to_imgmsg(imgInitial, 'passthrough')
         self.image_callback(rosimg)
         self.bValidImage = False
         
@@ -616,7 +616,7 @@ class MainWindow:
 
             # Convert the image.
             try:
-                img = np.uint8(cv.GetMat(self.cvbridge.imgmsg_to_cv(rosimg, 'passthrough')))
+                img = np.array(self.cvbridge.imgmsg_to_cv2(rosimg, 'passthrough'))
                 
             except CvBridgeError, e:
                 rospy.logwarn ('Exception converting background image from ROS to opencv:  %s' % e)
@@ -767,7 +767,7 @@ class MainWindow:
 
                 # Publish the output image.
                 #if (0 < self.pubImage.get_num_connections()):
-                rosimgOutput = self.cvbridge.cv_to_imgmsg(cv.fromarray(imgOutput), 'passthrough')
+                rosimgOutput = self.cvbridge.cv2_to_imgmsg(imgOutput, 'passthrough')
                 rosimgOutput.header = rosimg.header
                 rosimgOutput.encoding = 'bgr8'
                 self.pubImage.publish(rosimgOutput)
