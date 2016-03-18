@@ -1,7 +1,7 @@
 <launch>
   <param name="video_mode"           type="string" value="format7_mode0"/>
-  <param name="frame_rate"           type="double" value=    "100"/>
-  <param name="shutter"              type="double" value="500"/>
-
-
+  <param name="brightness"           type="double" value="720"/>
+  <param name="shutter"              type="double" value="1250"/>
+  <param name="gain"                 type="double" value="255"/>
+  
 </launch>
