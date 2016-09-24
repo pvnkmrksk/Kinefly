@@ -1,0 +1,16 @@
+<launch>
+	<!-- ========================================================== -->
+	<!-- Record a .bag file with 1 camera image stream  and         --> 
+	<!-- stimulus voltage recording.                                -->
+	<!-- ========================================================== -->
+
+    <arg name="prefix" default="" />
+    
+
+    <!-- The list of topics to record are given on the args line below.  
+         
+    -->
+
+    <node name="rosbag" pkg="rosbag" type="record" args="-j --buffsize=2048 -o $(env HOME)/bagfiles/$(arg prefix) /usb_cam/mono " />
+
+</launch>
