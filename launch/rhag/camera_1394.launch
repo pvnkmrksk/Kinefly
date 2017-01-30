@@ -2,9 +2,9 @@
 
 <launch>
   <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera" ns="rhag_camera">
-    <param name="width" type="int" value="320" /> 
+    <param name="width" type="int" value="640" /> 
     <!-- we raised the value by the factor 2, as it is supported by previous output -->
-    <param name="height" type="int" value="240" /> 
+    <param name="height" type="int" value="480" /> 
     <!-- we raised the value by the factor 2 -->
     <param name="fps" type="int" value="100" />
 
