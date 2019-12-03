@@ -2,7 +2,7 @@
 
 import rospy
 import copy
-import cv
+#import cv
 import cv2
 import numpy as np
 
