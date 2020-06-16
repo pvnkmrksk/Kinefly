@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 #import cv
@@ -91,7 +91,7 @@ class AxisTracker:
         tag = None
         
         # Check for handle hits.
-        for tagHandle,handle in self.handles.iteritems():
+        for tagHandle,handle in self.handles.items():
             if (handle.hit_test(ptMouse)):
                 tag = tagHandle
                 break
@@ -101,7 +101,7 @@ class AxisTracker:
 
     def draw_handles(self, image):
         # Draw all handle points.
-        for tagHandle,handle in self.handles.iteritems():
+        for tagHandle,handle in self.handles.items():
             handle.draw(image)
 
     

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 #import cv
@@ -79,8 +79,8 @@ class AreaTracker(MotionTrackedBodypartPolar):
         self.stateHi_p.radii     = [-np.inf]
         
         
-        self.windowStabilized.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['stabilize'])
-        self.windowComparison.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'])
+        self.windowStabilized.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['stabilize'])
+        self.windowComparison.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'])
 
 
         

@@ -10,8 +10,8 @@
   <url>http://ros.org/wiki/Kinefly</url>
   <depend package="cv_bridge"/> 
   <depend package="dynamic_reconfigure"/> 
-  <depend package="ledpanels"/> 
-  <depend package="phidgets"/> 
+
+
 
 </package>
 

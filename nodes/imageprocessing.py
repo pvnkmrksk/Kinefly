@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 import copy
@@ -45,7 +45,7 @@ def get_intersection(pt1a, pt1b, pt2a, pt2b):
 # get_projection_onto_axis()
 # Project the given point onto the axis.
 #
-def get_projection_onto_axis(ptAnywhere, (ptAxisBase, ptAxisHead)):
+def get_projection_onto_axis(ptAnywhere, ptAxisBase, ptAxisHead):
     # Project the point onto the body axis.
     ptB = ptAxisHead - ptAxisBase
     ptM = ptAnywhere - ptAxisBase
@@ -54,8 +54,8 @@ def get_projection_onto_axis(ptAnywhere, (ptAxisBase, ptAxisHead)):
     return ptAxis
     
             
-def get_reflection_across_axis(ptAnywhere, (ptAxisBase, ptAxisHead)):
-    ptAxis = get_projection_onto_axis(ptAnywhere, (ptAxisBase, ptAxisHead))
+def get_reflection_across_axis(ptAnywhere, ptAxisBase, ptAxisHead):
+    ptAxis = get_projection_onto_axis(ptAnywhere, ptAxisBase, ptAxisHead)
     ptReflected = ptAnywhere + 2*(ptAxis-ptAnywhere)
     
     return ptReflected
@@ -179,7 +179,7 @@ class PolarTransforms(object):
         return imgTransformed
 
 
-    def _get_transform_polar_elliptical(self, i_0, j_0, i_n, j_n, (raxial, rortho), drStrip, angleEllipse, nRho, nTheta, theta_0, theta_1, rClip):
+    def _get_transform_polar_elliptical(self, i_0, j_0, i_n, j_n, raxial, rortho, drStrip, angleEllipse, nRho, nTheta, theta_0, theta_1, rClip):
         nTheta = max(1,nTheta)
         transform = self._transforms.get((i_0, j_0, i_n, j_n, nRho, drStrip, nTheta, theta_0, theta_1, rClip))
     
@@ -333,7 +333,7 @@ class PolarTransforms(object):
         
         (pt, ij) = self._get_transform_polar_elliptical(i_0, j_0, 
                                            i_n, j_n,
-                                           (raxial, rortho),
+                                           raxial, rortho,
                                            dradiusStrip,
                                            angleEllipse, 
                                            nRho, 

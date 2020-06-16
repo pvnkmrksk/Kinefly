@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 import copy
@@ -53,7 +53,7 @@ class IntensityTrackedBodypart(object):
         self.imgRoiFg                           = None # Background subtracted.
         self.imgRoiFgMasked                     = None
 
-        # Extra windows.
+        # Extra python.
         self.windowBG         = ImageWindow(False, self.name+'BG')
         self.windowFG         = ImageWindow(False, self.name+'FG')
         self.windowMask       = ImageWindow(gbShowMasks, self.name+'Mask')
@@ -72,9 +72,9 @@ class IntensityTrackedBodypart(object):
         self.cosAngle = np.cos(self.params['gui'][self.name]['angle'])
         self.sinAngle = np.sin(self.params['gui'][self.name]['angle'])
 
-        # Turn on/off the extra windows.
-        self.windowBG.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['subtract_bg'])
-        self.windowFG.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'])
+        # Turn on/off the extra python.
+        self.windowBG.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['subtract_bg'])
+        self.windowFG.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'])
 
         # Refresh the handle points.
         self.update_handle_points()
@@ -244,7 +244,7 @@ class IntensityTrackedBodypart(object):
         
         # Check for handle hits.
         if (self.params['gui'][self.name]['track']):
-            for tagHandle,handle in self.handles.iteritems():
+            for tagHandle,handle in self.handles.items():
                 if (handle.hit_test(ptMouse)):
                     tag = tagHandle
                     break
@@ -255,7 +255,7 @@ class IntensityTrackedBodypart(object):
     def draw_handles(self, image):
         # Draw all handle points, or only just the hinge handle.
         if (self.params['gui'][self.name]['track']):
-            for tagHandle,handle in self.handles.iteritems():
+            for tagHandle,handle in self.handles.items():
                 handle.draw(image)
 
     
@@ -281,7 +281,7 @@ class IntensityTrackedBodypart(object):
                         self.bgra, 
                         1)
     
-            # Show the extra windows.
+            # Show the extra python.
             self.windowBG.show()
             self.windowFG.show()
             self.windowMask.show()

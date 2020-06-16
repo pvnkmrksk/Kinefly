@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #! coding=latin-1
 
 from __future__ import division
@@ -63,14 +63,14 @@ class MainWindow:
             # Load the parameters from server.
             try:
                 self.params = rospy.get_param(self.nodename, {})
-            except (rosparam.RosParamException, IndexError), e:
+            except (rosparam.RosParamException, IndexError) as e:
                 rospy.logwarn('%s.  Using default values.' % e)
                 self.params = {}
 
             # Load the GUI parameters yaml file.
             try:
                 self.params['gui'] = rosparam.load_file(self.yamlfile)[0][0]
-            except (rosparam.RosParamException, IndexError), e:
+            except (rosparam.RosParamException, IndexError) as e:
                 rospy.logwarn('%s.  Using default values.' % e)
             
         defaults = {'filenameBackground':'~/%s.png' % self.nodename.strip('/'),
@@ -104,7 +104,7 @@ class MainWindow:
                                'saturation_correction':False},
                     'aux':    {'tracker':'intensity',
                                'saturation_correction':False},
-                    'gui': {'windows':False,                    # Show the helpful extra windows.
+                    'gui': {'python':False,                    # Show the helpful extra python.
                             'symmetric':True,                   # Forces the UI to remain symmetric.
                             'axis':   {'track':False,           # To track, or not to track.
                                        'pt1':{'x':310,
@@ -219,8 +219,8 @@ class MainWindow:
         self.shapeToolbar   = (0,0)
         
         # Publishers.
-        self.pubCommand     = rospy.Publisher(self.nodename+'/command', String)
-        self.pubImage       = rospy.Publisher(self.nodename+'/image_output', Image)
+        self.pubCommand     = rospy.Publisher(self.nodename+'/command', String,queue_size=50)
+        self.pubImage       = rospy.Publisher(self.nodename+'/image_output', Image,queue_size=50)
 
         # Subscriptions.        
         sizeImage = 128+1024*1024 # Size of header + data.
@@ -356,7 +356,7 @@ class MainWindow:
         
         x = btn.right+1
         y = btn.top+1
-        btn = ui.Button(pt=[x,y], scale=self.scale, type='checkbox', name='windows', text='windows', state=self.params['gui']['windows'])
+        btn = ui.Button(pt=[x,y], scale=self.scale, type='checkbox', name='python', text='python', state=self.params['gui']['python'])
         self.wrap_button(btn, shape)
         self.buttons.append(btn)
         
@@ -620,7 +620,7 @@ class MainWindow:
             try:
                 img = np.array(self.cvbridge.imgmsg_to_cv2(rosimg, 'passthrough'))
                 
-            except CvBridgeError, e:
+            except CvBridgeError as e:
                 rospy.logwarn ('Exception converting background image from ROS to opencv:  %s' % e)
                 img = np.zeros((320,240))
 
@@ -936,7 +936,7 @@ class MainWindow:
                 bodypartSelected.bValidMask = False
 
                 if (paramsScaled['gui']['symmetric']):
-                    ptSlave = imageprocessing.get_reflection_across_axis(ptMouse, (self.fly.abdomen.ptHinge_i, self.fly.head.ptHinge_i))
+                    ptSlave = imageprocessing.get_reflection_across_axis(ptMouse, self.fly.abdomen.ptHinge_i, self.fly.head.ptHinge_i)
                     paramsScaled['gui'][partnameSlave]['hinge']['x'] = float(ptSlave[0])
                     paramsScaled['gui'][partnameSlave]['hinge']['y'] = float(ptSlave[1])
                     bodypartSlave.bValidMask = False
@@ -1192,8 +1192,8 @@ class MainWindow:
                     self.params['gui']['left']['stabilize']    = self.buttons[iButtonSelected].state
                     self.params['gui']['right']['stabilize']   = self.buttons[iButtonSelected].state
 
-                elif (self.nameSelected == self.nameSelectedNow == 'windows'):
-                    self.params['gui']['windows'] = self.buttons[iButtonSelected].state
+                elif (self.nameSelected == self.nameSelectedNow == 'python'):
+                    self.params['gui']['python'] = self.buttons[iButtonSelected].state
 
 
             if (self.uiSelected in ['handle','checkbox']):

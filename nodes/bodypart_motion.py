@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 import copy
@@ -65,7 +65,7 @@ class MotionTrackedBodypart(object):
         self.imgFinal                           = None # The image to use for tracking.
         self.imgHeadroom                        = None
         
-        # Extra windows.
+        # Extra python.
         self.windowBG         = ImageWindow(False, self.name+'BG')
         self.windowFG         = ImageWindow(False, self.name+'FG')
         self.windowMask       = ImageWindow(gbShowMasks, self.name+'Mask')
@@ -105,7 +105,7 @@ class MotionTrackedBodypart(object):
             self.angleBodypart_i = float(np.arctan2(self.params['gui'][self.name]['hinge']['y']-self.params['gui'][nameRelative[self.name]]['hinge']['y'], 
                                                     self.params['gui'][self.name]['hinge']['x']-self.params['gui'][nameRelative[self.name]]['hinge']['x']))
         else:
-            ptBodyaxis_i = imageprocessing.get_projection_onto_axis(self.ptHinge_i, (self.ptHingeAbdomen_i, self.ptHingeHead_i))
+            ptBodyaxis_i = imageprocessing.get_projection_onto_axis(self.ptHinge_i, self.ptHingeAbdomen_i, self.ptHingeHead_i)
             self.angleBodypart_i = float(np.arctan2(self.params['gui'][self.name]['hinge']['y']-ptBodyaxis_i[1], 
                                                     self.params['gui'][self.name]['hinge']['x']-ptBodyaxis_i[0]))
 
@@ -117,9 +117,9 @@ class MotionTrackedBodypart(object):
         self.R = np.array([[cosAngleBodypart_i, -sinAngleBodypart_i], 
                            [sinAngleBodypart_i, cosAngleBodypart_i]])
 
-        # Turn on/off the extra windows.
-        self.windowBG.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['subtract_bg'])
-        self.windowFG.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'])
+        # Turn on/off the extra python.
+        self.windowBG.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'] and self.params['gui'][self.name]['subtract_bg'])
+        self.windowFG.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'])
 
         self.angle_hi_i = self.transform_angle_i_from_b(self.params['gui'][self.name]['angle_hi'])
         self.angle_lo_i = self.transform_angle_i_from_b(self.params['gui'][self.name]['angle_lo'])
@@ -360,7 +360,7 @@ class MotionTrackedBodypart(object):
         
         # Check for handle hits.
         if (self.params['gui'][self.name]['track']):
-            for tagHandle,handle in self.handles.iteritems():
+            for tagHandle,handle in self.handles.items():
                 if (handle.hit_test(ptMouse)):
                     tag = tagHandle
                     break
@@ -376,7 +376,7 @@ class MotionTrackedBodypart(object):
     def draw_handles(self, image):
         # Draw all handle points, or only just the hinge handle.
         if (self.params['gui'][self.name]['track']):
-            for tagHandle,handle in self.handles.iteritems():
+            for tagHandle,handle in self.handles.items():
                 handle.draw(image)
         else:
             tagHandle,handle = ('hinge',self.handles['hinge'])
@@ -435,7 +435,7 @@ class MotionTrackedBodypart(object):
             cv2.line(image, self.ptWedgeLo_inner, self.ptWedgeLo_outer, self.bgra_dim, 1)
 
     
-            # Show the extra windows.
+            # Show the extra python.
             self.windowBG.show()
             self.windowFG.show()
             self.windowMask.show()
@@ -465,7 +465,7 @@ class MotionTrackedBodypartPolar(MotionTrackedBodypart):
         
     def set_params(self, params):
         MotionTrackedBodypart.set_params(self, params)
-        self.windowPolar.set_enable(self.params['gui']['windows'] and self.params['gui'][self.name]['track'])
+        self.windowPolar.set_enable(self.params['gui']['python'] and self.params['gui'][self.name]['track'])
 
         
     def create_mask(self, shape):

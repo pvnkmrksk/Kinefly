@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 #import cv
@@ -93,7 +93,7 @@ class Fly(object):
         self.stamp = rospy.Time(0)
         
 
-        self.pubFlystate = rospy.Publisher(self.nodename+'/flystate', MsgFlystate)
+        self.pubFlystate = rospy.Publisher(self.nodename+'/flystate', MsgFlystate,queue_size=50)
  
 
     def set_params(self, params):

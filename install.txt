@@ -8,9 +8,9 @@
 
 
 # Get a few additional pieces.
-sudo apt-get install -y python-setuptools
-sudo apt-get install -y python-numpy
-sudo apt-get install -y python-scipy
+sudo apt-get install -y python3-setuptools
+sudo apt-get install -y python3-numpy
+sudo apt-get install -y python3-scipy
 sudo apt-get install -y libdc1394-22-dev
 sudo apt-get install -y intltool
 sudo apt-get install -y gobject-introspection
@@ -48,7 +48,7 @@ cd libphidget
 make && sudo make install 
 # Download & extract the file http://www.phidgets.com/downloads/libraries/PhidgetsPython.zip
 cd PhidgetsPython
-sudo python setup.py install
+sudo python3 setup.py install
 
 
 # Get the LED Panels ROS node.

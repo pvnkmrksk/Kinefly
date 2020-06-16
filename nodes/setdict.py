@@ -15,7 +15,7 @@ class SetDict(object):
     #    dT is {'a':0, 'b':2, 'c':0}
     #
     def set_dict(self, dTarget, dSource, bPreserve):
-        for k,v in dSource.iteritems():
+        for k,v in dSource.items():
             bKeyExists = (k in dTarget)
             if (not bKeyExists) and type(v)==type({}):
                 dTarget[k] = {}
