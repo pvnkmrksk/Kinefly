@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import cv
+#import cv
 import cv2
 import numpy as np
 
