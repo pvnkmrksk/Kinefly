@@ -2,18 +2,23 @@
 	<!-- ========================================================== -->
 	<!-- Launch everything needed for Kinefly, except the           -->
     <!-- source image streams.                                      -->
-	<!-- ========================================================== >
+	<!-- ========================================================== -->
 
-    <include file="$(find Kinefly)/launch/$(env RIG)/params_stimulus.launch" /-->
+    <!-- <include file="$(find Kinefly)/launch/$(env RIG)/params_stimulus.launch" /> -->
 
     <include file="$(find Kinefly)/launch/$(env RIG)/params_kinefly.launch"                 ns="kinefly" />
-    <!--<include file="$(find Kinefly)/launch/$(env RIG)/params_ledpanels.launch"               ns="kinefly" />>
-    <include file="$(find Kinefly)/launch/$(env RIG)/params_phidgetsanalog.launch"          ns="kinefly" /-->
+    <!--<include file="$(find Kinefly)/launch/$(env RIG)/params_ledpanels.launch"               ns="kinefly" />
+    <include file="$(find Kinefly)/launch/$(env RIG)/params_phidgetsanalog.launch"          ns="kinefly" />-->
 
-    <node name="kinefly"                  pkg="Kinefly"   type="kinefly.py"                                  required="true"      />
-    <!--<node name="ledpanels"                pkg="ledpanels" type="ledpanels.py" />-->
-    <!--<node name="flystate2ledpanels"       pkg="Kinefly"   type="flystate2ledpanels.py"      ns="kinefly"  />>
-    <node name="flystate2phidgetsanalog"  pkg="Kinefly"   type="flystate2phidgetsanalog.py" ns="kinefly"  /-->
+    <!-- Start Kinefly with the correct image topic -->
+    <node name="kinefly" pkg="Kinefly" type="kinefly.py" required="true">
+        <param name="image_topic" value="/rhag_camera/camera/image_mono" />
+        <param name="use_gui" value="true" />
+    </node>
+
+    <!--<node name="ledpanels" pkg="ledpanels" type="ledpanels.py" />-->
+    <!--<node name="flystate2ledpanels" pkg="Kinefly" type="flystate2ledpanels.py" ns="kinefly" />
+    <node name="flystate2phidgetsanalog" pkg="Kinefly" type="flystate2phidgetsanalog.py" ns="kinefly" />-->
     
     
     
